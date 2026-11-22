@@ -14,6 +14,8 @@
 .nm-popup-wrap .maplibregl-popup-tip { border-top-color: rgba(22, 12, 42, .96); border-bottom-color: rgba(22, 12, 42, .96); }
 .nm-popup-wrap .maplibregl-popup-close-button { width: 28px; height: 28px; color: #fff; font-size: 18px; }
 .nm-popup { color: #fff4ea; font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.nm-popup-img { display: block; width: calc(100% + 32px); max-width: none; height: 150px; margin: -14px -16px 11px; object-fit: cover; border-radius: 10px 10px 0 0; }
+.nm-popup-wrap .maplibregl-popup-close-button { z-index: 1; top: 6px; right: 6px; background: rgba(13, 7, 32, .78); border-radius: 50%; }
 .nm-popup-cat { margin-bottom: 3px; color: #ffb347; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .nm-popup-title { display: block; padding-right: 16px; font-size: 15px; }
 .nm-popup-text { margin: 5px 0 9px; color: #e6d8e8; }

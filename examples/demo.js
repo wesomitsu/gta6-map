@@ -4,6 +4,9 @@ function runDemo(config) {
   var count = document.getElementById('count');
   var active = null;
   var items = {};
+  config.places.forEach(function (p) {
+    if (config.imagePrefix) p.image = 'img/' + config.imagePrefix + '-' + p.id + '.jpg';
+  });
 
   function paintActive(id) {
     Object.keys(items).forEach(function (key) {
@@ -34,6 +37,13 @@ function runDemo(config) {
       price.textContent = place.price;
       var text = document.createElement('span');
       text.textContent = place.category + ' · ' + place.description;
+      if (place.image) {
+        var thumb = document.createElement('img');
+        thumb.src = place.image;
+        thumb.alt = '';
+        thumb.loading = 'lazy';
+        row.appendChild(thumb);
+      }
       row.append(name, price, text);
       row.addEventListener('click', function () { neon.select(place.id); });
       row.addEventListener('mouseenter', function () { neon.highlight(place.id); });

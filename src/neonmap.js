@@ -126,6 +126,16 @@
 
   function popupContent(place) {
     var box = el('div', 'nm-popup');
+    var image = place.image && safeUrl(place.image);
+    if (image) {
+      var photo = el('img', 'nm-popup-img');
+      photo.src = image;
+      photo.alt = place.imageAlt || place.name;
+      photo.width = 280;
+      photo.height = 160;
+      photo.addEventListener('error', function () { photo.remove(); });
+      box.appendChild(photo);
+    }
     if (place.category) box.appendChild(el('div', 'nm-popup-cat', place.category));
     box.appendChild(el('strong', 'nm-popup-title', place.name));
     if (place.description) box.appendChild(el('p', 'nm-popup-text', place.description));

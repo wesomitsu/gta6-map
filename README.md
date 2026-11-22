@@ -21,7 +21,7 @@ Neon 3D streets for any real city. No API key, no build step.
   NeonMap.create('#map', {
     theme: 'sunset', // sunset, midnight or daybreak
     places: [
-      { name: 'Ocean Loft', lng: -80.13, lat: 25.785, price: '$189', category: 'Apartment', url: '/stays/ocean-loft', cta: 'Book' },
+      { name: 'Ocean Loft', lng: -80.13, lat: 25.785, price: '$189', category: 'Apartment', image: '/photos/ocean-loft.jpg', url: '/stays/ocean-loft', cta: 'Book' },
       { name: 'Palm Suites', lng: -80.134, lat: 25.792, price: '$142', category: 'Hotel', url: '/stays/palm-suites', cta: 'Book' }
     ],
     onSelect: (place) => console.log(place.name)
@@ -75,4 +75,4 @@ This is a simple 2D driving model for prototypes, demos, and learning. It has no
 
 ## Credits and license
 
-Code is [MIT](LICENSE). Built with [MapLibre GL JS](https://maplibre.org/). Tiles from [OpenFreeMap](https://openfreemap.org/), using [OpenMapTiles](https://openmaptiles.org/) and data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors. Keep the map attribution visible.
+Code is [MIT](LICENSE). Built with [MapLibre GL JS](https://maplibre.org/). Tiles from [OpenFreeMap](https://openfreemap.org/), using [OpenMapTiles](https://openmaptiles.org/) and data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors. Keep the map attribution visible. Demo photos are from [Unsplash](https://unsplash.com/license) and don't show the made-up listings.
