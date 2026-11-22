@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simple Embed | gta6-map</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="../src/neonmap.css">
+<style>html, body, #map { height: 100%; margin: 0; background: #1b1033; }</style>
+</head>
+<body>
+<div id="map" role="application" aria-label="Map"></div>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+<script src="../src/neonmap.js"></script>
+<script>
+NeonMap.create('#map', {
+  theme: 'sunset',
+  places: [
+    { name: 'Ocean Loft', lng: -80.13, lat: 25.785, price: '$189', description: 'Sample listing.' },
+    { name: 'Palm Suites', lng: -80.134, lat: 25.792, price: '$142', description: 'Sample listing.' }
+  ]
+});
+</script>
+</body>
+</html>

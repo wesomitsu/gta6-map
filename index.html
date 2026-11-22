@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gta6-map: open-world style maps for your product</title>
+<meta name="description" content="Free, open-source neon open-world style maps for hotels, restaurants, events and any website. Unofficial fan project.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="src/neonmap.css">
+<style>
+:root { --bg: #140b28; --panel: #21133d; --ink: #fff4ea; --muted: #cbbdd4; --pink: #ff4f8f; --gold: #ffb347; --line: rgba(255,255,255,.14); }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--bg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+a { color: var(--gold); }
+.hero { position: relative; height: min(88vh, 780px); min-height: 590px; overflow: hidden; }
+#map { position: absolute; inset: 0; }
+.intro { position: absolute; z-index: 2; left: 32px; top: 32px; width: min(460px, calc(100% - 32px)); padding: 24px; background: rgba(20,11,40,.9); border: 1px solid var(--line); border-radius: 12px; }
+.tag { margin: 0 0 6px; color: var(--gold); font-size: 13px; font-weight: 700; }
+h1 { margin: 0 0 10px; font-size: clamp(30px, 5vw, 46px); line-height: 1.05; }
+.intro p { margin: 0 0 16px; color: #eadfea; }
+.label { display: block; margin: 12px 0 6px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { min-height: 36px; padding: 6px 12px; color: var(--ink); font: inherit; font-size: 14px; background: #2d1b50; border: 1px solid var(--line); border-radius: 7px; cursor: pointer; }
+.chips button[aria-pressed="true"] { color: #24102f; font-weight: 700; background: var(--gold); }
+main { width: min(1120px, 100%); margin: auto; padding: 56px 24px; }
+h2 { margin: 0 0 8px; font-size: 30px; line-height: 1.15; }
+.lead { max-width: 660px; margin: 0 0 24px; color: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 56px; }
+.card { display: block; padding: 20px; color: var(--ink); text-decoration: none; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.card:hover { border-color: var(--gold); }
+.card strong { display: block; margin-bottom: 4px; font-size: 18px; }
+.card span { color: var(--muted); font-size: 15px; }
+.card em { display: block; margin-top: 12px; color: var(--gold); font-style: normal; font-weight: 700; }
+pre { margin: 0; padding: 18px; overflow-x: auto; color: #ffe9d6; font: 13px/1.6 ui-monospace, Menlo, Consolas, monospace; background: #0d0720; border: 1px solid var(--line); border-radius: 10px; }
+footer { padding: 24px; color: var(--muted); font-size: 14px; text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 760px) {
+  .hero { height: 760px; }
+  .intro { left: 16px; right: 16px; top: 16px; width: auto; padding: 18px; }
+  .maplibregl-ctrl-top-right { top: 470px; }
+  main { padding: 40px 16px; }
+  .cards { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div id="map" role="application" aria-label="Interactive neon map"></div>
+  <div class="intro">
+    <p class="tag">Free and open source</p>
+    <h1>Give your site an open-world map</h1>
+    <p>A neon, 3D, game-style map for real places. Drop it into a hotel, restaurant, event or travel site with a few lines of code.</p>
+    <span class="label">Try a city</span>
+    <div class="chips" id="cities"></div>
+    <span class="label">Pick a style</span>
+    <div class="chips" id="themes"></div>
+  </div>
+</section>
+<main>
+  <h2>See it in real products</h2>
+  <p class="lead">These demos use sample listings on real streets. Swap in your own places and you're done.</p>
+  <div class="cards">
+    <a class="card" href="examples/stays.html"><strong>Stays booking</strong><span>Filter rentals and hotels, with prices on the map.</span><em>Open demo →</em></a>
+    <a class="card" href="examples/food.html"><strong>Food guide</strong><span>A city restaurant guide with a synced list.</span><em>Open demo →</em></a>
+    <a class="card" href="examples/embed.html"><strong>Simple embed</strong><span>The smallest working page, ready to copy.</span><em>Open demo →</em></a>
+  </div>
+  <h2>Train your AI on it</h2>
+  <p class="lead">Game worlds are a popular way to test driving and navigation AI. This one uses real streets and no game files: your agent reads road sensors, sends steering and throttle, and gets a reward. It's built for prototypes and demos, not real vehicles.</p>
+  <div class="cards">
+    <a class="card" href="examples/ai-drive.html"><strong>AI driving sandbox</strong><span>Watch a sample AI drive, or take the wheel.</span><em>Open sandbox →</em></a>
+    <div class="card"><strong>Connect directly</strong><span>Call <code>NeonDriveEnv.reset()</code> and <code>step()</code> from JavaScript.</span></div>
+    <div class="card"><strong>Works with your stack</strong><span>Use Playwright from Python, or <code>postMessage</code> from another site.</span></div>
+  </div>
+  <h2>Add it in a minute</h2>
+  <p class="lead">No API key, no build step. Paste this into any page.</p>
+<pre><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.css"&gt;
+&lt;link rel="stylesheet" href="https://wesomitsu.github.io/gta6-map/src/neonmap.css"&gt;
+&lt;div id="map" style="height:500px"&gt;&lt;/div&gt;
+
+&lt;script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.js"&gt;&lt;/script&gt;
+&lt;script src="https://wesomitsu.github.io/gta6-map/src/neonmap.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  NeonMap.create('#map', {
+    theme: 'sunset',
+    places: [
+      { name: 'Ocean Loft', lng: -80.1300, lat: 25.7850, price: '$189', url: '/stays/ocean-loft' },
+      { name: 'Palm Suites', lng: -80.1340, lat: 25.7920, price: '$142', url: '/stays/palm-suites' }
+    ]
+  });
+&lt;/script&gt;</code></pre>
+</main>
+<footer>Unofficial fan project, not affiliated with or endorsed by Rockstar Games or Take-Two. Contains no game assets. Map data © OpenStreetMap contributors. <a href="https://github.com/wesomitsu/gta6-map">View on GitHub</a></footer>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+<script src="src/neonmap.js"></script>
+<script>
+var cities = { Miami: [-80.1918, 25.7743], Tokyo: [139.7016, 35.6595], Dubai: [55.2744, 25.1972], Paris: [2.3376, 48.8606], 'New York': [-73.9857, 40.7484] };
+var neon = NeonMap.create('#map', { center: cities.Miami, zoom: 14.6, pitch: 58, bearing: -24 });
+function chips(id, names, active, onPick, title) {
+  var box = document.getElementById(id);
+  names.forEach(function (name) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = title ? title(name) : name;
+    b.setAttribute('aria-pressed', String(name === active));
+    b.addEventListener('click', function () {
+      box.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      onPick(name);
+    });
+    box.appendChild(b);
+  });
+}
+chips('cities', Object.keys(cities), 'Miami', function (c) { neon.flyTo(cities[c], 14.6); });
+chips('themes', NeonMap.themes, 'sunset', function (t) { neon.setTheme(t); }, function (t) { return t[0].toUpperCase() + t.slice(1); });
+</script>
+</body>
+</html>

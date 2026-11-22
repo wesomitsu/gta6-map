@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stays Demo | gta6-map</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="../src/neonmap.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <a class="back" href="../index.html">← gta6-map</a>
+    <h1>Coastline Stays</h1>
+    <p class="note">Demo with made-up listings and prices.</p>
+    <div class="filters" id="filters"></div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <div class="list" id="list"></div>
+  </aside>
+  <div id="map" role="application" aria-label="Map of stays"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+<script src="../src/neonmap.js"></script>
+<script src="demo.js"></script>
+<script>
+runDemo({
+  all: 'All stays',
+  theme: 'sunset',
+  places: [
+    { id: 1, name: 'Ocean Drive Loft', category: 'Apartment', lng: -80.1309, lat: 25.7803, price: '$189', description: 'Sea-view loft, sleeps 2.', cta: 'Book' },
+    { id: 2, name: 'Palm Court Suites', category: 'Hotel', lng: -80.1342, lat: 25.7892, price: '$142', description: 'Pool, breakfast and free bikes.', cta: 'Book' },
+    { id: 3, name: 'Sunset Harbor House', category: 'House', lng: -80.1421, lat: 25.7968, price: '$320', description: 'Three bedrooms by the bay.', cta: 'Book' },
+    { id: 4, name: 'Collins Beach Hotel', category: 'Hotel', lng: -80.1283, lat: 25.7936, price: '$215', description: 'Steps from the sand.', cta: 'Book' },
+    { id: 5, name: 'Flamingo Studio', category: 'Apartment', lng: -80.1377, lat: 25.7826, price: '$98', description: 'Compact studio with a balcony.', cta: 'Book' },
+    { id: 6, name: 'Bayfront Villa', category: 'House', lng: -80.1398, lat: 25.8042, price: '$410', description: 'Private dock, sleeps 8.', cta: 'Book' }
+  ]
+});
+</script>
+</body>
+</html>

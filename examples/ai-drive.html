@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Driving Sandbox | gta6-map</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="../src/neonmap.css">
+<link rel="stylesheet" href="demo.css">
+<style>
+.actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0; }
+.actions button { min-height: 38px; padding: 6px 12px; color: var(--ink); font: inherit; font-weight: 700; background: #2d1b50; border: 1px solid var(--line); border-radius: 7px; cursor: pointer; }
+.actions button:first-child { color: #24102f; background: var(--gold); }
+.side { overflow-y: auto; }
+h2 { margin: 16px 0 6px; font-size: 16px; }
+pre { margin: 0; padding: 11px; overflow-x: auto; color: #ffe9d6; font: 12px/1.5 ui-monospace, Menlo, Consolas, monospace; background: #0d0720; border: 1px solid var(--line); border-radius: 7px; }
+.nd-car { width: 18px; height: 30px; background: var(--gold); clip-path: polygon(50% 0, 100% 100%, 50% 80%, 0 100%); filter: drop-shadow(0 0 5px #ffb347); }
+.nd-goal { width: 22px; height: 22px; background: #32e0ff; border: 3px solid #fff; border-radius: 50%; box-shadow: 0 0 16px #32e0ff; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <a class="back" href="../index.html">← gta6-map</a>
+    <h1>AI Driving Sandbox</h1>
+    <p class="note">Connect an agent, read road sensors, send steering and throttle. Arrow keys also work.</p>
+    <div class="actions"><button id="run" type="button">Run sample AI</button><button id="reset" type="button">Reset</button></div>
+    <p class="count" id="status" aria-live="polite">Loading map…</p>
+    <h2>Live data</h2>
+    <pre id="obs">{}</pre>
+    <h2>Connect your AI</h2>
+<pre>const env = window.NeonDriveEnv;
+let obs = env.reset(), done = false;
+while (!done) {
+  const action = yourModel(obs);
+  const r = env.step(action);
+  obs = r.observation;
+  done = r.done;
+}</pre>
+    <p class="note" style="margin-top:8px">From Python, drive this page with Playwright: <code>page.evaluate("a =&gt; NeonDriveEnv.step(a)", action)</code>. From another site, use <code>postMessage</code>. This is for prototyping, not real-vehicle training.</p>
+  </aside>
+  <div id="map" role="application" aria-label="AI driving map"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+<script src="../src/neonmap.js"></script>
+<script src="../src/neondrive.js"></script>
+<script>
+var neon = NeonMap.create('#map', { theme: 'sunset', center: [-80.13281, 25.781], zoom: 17, pitch: 0, bearing: 2, fit: false });
+var statusEl = document.getElementById('status'), obsEl = document.getElementById('obs'), timer = null, keys = {}, env;
+function show(o, info) {
+  obsEl.textContent = JSON.stringify({ speedMps: +o.speedMps.toFixed(1), onRoad: o.onRoad, rayMeters: o.rayMeters, goalDistanceM: Math.round(o.goalDistanceM), goalAngleDeg: Math.round(o.goalAngleDeg) }, null, 1);
+  if (info) statusEl.textContent = info.reached ? 'Reached the goal in ' + info.steps + ' steps.' : info.crashed ? 'Left the road. Reset to try again.' : info.timedOut ? 'Ran out of time.' : 'Step ' + info.steps + ', reward ' + info.totalReward.toFixed(1);
+}
+function stop() { clearInterval(timer); timer = null; }
+function loop(policy) {
+  stop();
+  var o = env.reset();
+  timer = setInterval(function () {
+    var r = env.step(policy(o));
+    o = r.observation;
+    show(o, r.info);
+    if (r.done) stop();
+  }, 40);
+}
+neon.map.once('idle', function () {
+  env = window.NeonDriveEnv = NeonDrive.create(neon);
+  show(env.reset());
+  statusEl.textContent = 'Ready.';
+  document.getElementById('run').onclick = function () { loop(env.baseline); };
+  document.getElementById('reset').onclick = function () { stop(); show(env.reset()); statusEl.textContent = 'Ready.'; };
+  addEventListener('keydown', function (e) {
+    if (!e.key.startsWith('Arrow')) return;
+    e.preventDefault();
+    keys[e.key] = true;
+    if (!timer) loop(function () { return { steer: (keys.ArrowRight ? 1 : 0) - (keys.ArrowLeft ? 1 : 0), throttle: (keys.ArrowUp ? 1 : 0) - (keys.ArrowDown ? 1 : 0) }; });
+  });
+  addEventListener('keyup', function (e) { delete keys[e.key]; });
+});
+</script>
+</body>
+</html>

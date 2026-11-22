@@ -1,0 +1,23 @@
+.nm-root { --nm-accent: #ff3d81; --nm-accent2: #ffb347; --nm-ink: #fff4ea; --nm-panel: rgba(22, 12, 42, .95); background: #1b1033; }
+
+.nm-pin { position: relative; border: 0; padding: 0 0 7px; background: none; cursor: pointer; font: 700 12px/1 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.nm-pin::after { content: ""; position: absolute; left: 50%; bottom: 1px; width: 9px; height: 9px; background: var(--nm-accent); transform: translateX(-50%) rotate(45deg); }
+.nm-pin-label { position: relative; z-index: 1; display: block; max-width: 150px; padding: 7px 10px; overflow: hidden; color: #fff; white-space: nowrap; text-overflow: ellipsis; background: var(--nm-accent); border-radius: 7px; box-shadow: 0 0 14px color-mix(in srgb, var(--nm-accent) 70%, transparent), 0 3px 9px rgba(0, 0, 0, .4); transition: transform .15s ease, background .15s ease; }
+.nm-pin:hover .nm-pin-label, .nm-pin:focus-visible .nm-pin-label { transform: translateY(-2px); }
+.nm-pin:focus-visible { outline: none; }
+.nm-pin:focus-visible .nm-pin-label { outline: 2px solid #fff; outline-offset: 1px; }
+.nm-pin.is-active { z-index: 5; }
+.nm-pin.is-active .nm-pin-label { color: #24102f; background: var(--nm-accent2); box-shadow: 0 0 22px var(--nm-accent2); }
+.nm-pin.is-active::after { background: var(--nm-accent2); }
+
+.nm-popup-wrap .maplibregl-popup-content { padding: 14px 16px; color: var(--nm-ink, #fff4ea); background: rgba(22, 12, 42, .96); border: 1px solid rgba(255, 255, 255, .16); border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, .45); }
+.nm-popup-wrap .maplibregl-popup-tip { border-top-color: rgba(22, 12, 42, .96); border-bottom-color: rgba(22, 12, 42, .96); }
+.nm-popup-wrap .maplibregl-popup-close-button { width: 28px; height: 28px; color: #fff; font-size: 18px; }
+.nm-popup { color: #fff4ea; font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.nm-popup-cat { margin-bottom: 3px; color: #ffb347; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.nm-popup-title { display: block; padding-right: 16px; font-size: 15px; }
+.nm-popup-text { margin: 5px 0 9px; color: #e6d8e8; }
+.nm-popup-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.nm-popup-price { font-weight: 700; }
+.nm-popup-link { padding: 6px 11px; color: #fff; font-weight: 700; text-decoration: none; background: #e0266b; border-radius: 6px; }
+.nm-popup-link:hover { background: #c81d5c; }
