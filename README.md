@@ -4,6 +4,8 @@
 
 Neon 3D streets for any real city. No API key, no build step.
 
+[![Neon 3D city map, a stays booking demo with photos, and an AI car driving on real streets](docs/demo.gif)](https://wesomitsu.github.io/gta6-map/)
+
 **[Live demo](https://wesomitsu.github.io/gta6-map/)** · [Stays site](https://wesomitsu.github.io/gta6-map/examples/stays.html) · [Food guide](https://wesomitsu.github.io/gta6-map/examples/food.html) · [AI driving sandbox](https://wesomitsu.github.io/gta6-map/examples/ai-drive.html)
 
 > Unofficial fan project, not affiliated with or endorsed by Rockstar Games or Take-Two. It contains no game files, art, or map data. The streets are real-world OpenStreetMap data, and the style is original.
